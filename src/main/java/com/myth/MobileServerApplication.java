@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.myth.context.ServerContext;
 import com.myth.db.PersistInitialiser;
+import com.myth.health.ServerHealthCheck;
 import com.myth.resources.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -38,6 +39,9 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
     @Override
     public void run(final MobileServerConfiguration configuration,
                     final Environment environment) {
+
+        environment.healthChecks().register("App Health Check", new ServerHealthCheck());
+
         FluentConfiguration flywayConfiguration = Flyway.configure();
         flywayConfiguration.dataSource(configuration.getDataSourceFactory().getUrl(),
                                        configuration.getDataSourceFactory().getUser(),
