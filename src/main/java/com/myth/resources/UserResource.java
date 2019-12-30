@@ -108,7 +108,6 @@ public class UserResource {
     @ApiResponses(value = {
             @ApiResponse(code = HttpStatus.NO_CONTENT_204, message = "Deleted"),
             @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "Not Found")})
-
     public CompletionStage<Response> delete(@ApiParam(value = "userId", example = "1") @PathParam("userId") long userId) {
         if (userId < 1) {
             return CompletableFuture

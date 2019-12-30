@@ -11,3 +11,8 @@ Health Check
 ---
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+Test
+---
+1. Run only unit test with command `mvn test`
+2. Run unit test with integration test with command `mvn verify -DskipIntegrationTests=false`

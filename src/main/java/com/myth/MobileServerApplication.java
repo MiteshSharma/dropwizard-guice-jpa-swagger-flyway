@@ -13,7 +13,6 @@ import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
-import ru.vyarus.dropwizard.guice.GuiceBundle;
 
 public class MobileServerApplication extends Application<MobileServerConfiguration> {
 
