@@ -23,6 +23,18 @@ public class User extends BaseModel {
     public User() {
     }
 
+    public User(String name) {
+        this.name = name;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public long getUserId() {
         return userId;
     }
