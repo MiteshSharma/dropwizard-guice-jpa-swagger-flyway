@@ -1,18 +1,31 @@
 package com.myth;
 
+import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.myth.auth.UserAuthenticator;
+import com.myth.auth.UserAuthorizer;
 import com.myth.context.ServerContext;
 import com.myth.db.PersistInitialiser;
 import com.myth.health.ServerHealthCheck;
+import com.myth.models.User;
 import com.myth.resources.UserResource;
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+import org.jose4j.keys.HmacKey;
+
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 
 public class MobileServerApplication extends Application<MobileServerConfiguration> {
 
@@ -54,6 +67,32 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
         this.initResources(environment, injector);
 
         ServerContext.init(configuration.getServerContextConfig());
+
+        this.setupAuth(configuration, environment, injector);
+    }
+
+    private void setupAuth(final MobileServerConfiguration configuration,
+                           final Environment environment, final Injector injector) {
+        final byte[] key = configuration.getJwtTokenSecret();
+
+        final JwtConsumer consumer = new JwtConsumerBuilder().setAllowedClockSkewInSeconds(30)
+                .setRequireExpirationTime()
+                .setRequireSubject()
+                .setVerificationKey(new HmacKey(key))
+                .setRelaxVerificationKeyValidation()
+                .build();
+
+        UserAuthenticator userAuthenticator = injector.getInstance(UserAuthenticator.class);
+        UserAuthorizer userAuthorizer = injector.getInstance(UserAuthorizer.class);
+        environment.jersey().register(new AuthDynamicFeature(new JwtAuthFilter.Builder<User>().setJwtConsumer(consumer)
+                .setRealm("realm")
+                .setPrefix("Bearer")
+                .setAuthenticator(userAuthenticator)
+                .setAuthorizer(userAuthorizer)
+                .buildAuthFilter()));
+
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
     }
 
     private void initResources(final Environment environment, final Injector injector) {

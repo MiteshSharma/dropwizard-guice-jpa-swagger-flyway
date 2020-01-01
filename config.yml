@@ -31,3 +31,5 @@ swagger:
 
 serverContextConfig:
   mysqlReadWriteThreadCount: 55
+
+jwtTokenSecret: token

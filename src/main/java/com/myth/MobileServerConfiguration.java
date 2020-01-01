@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.UnsupportedEncodingException;
 
 public class MobileServerConfiguration extends Configuration {
 
@@ -24,6 +25,10 @@ public class MobileServerConfiguration extends Configuration {
     @JsonProperty("serverContextConfig")
     private ServerContextConfig serverContextConfig;
 
+    @NotEmpty
+    @JsonProperty("jwtTokenSecret")
+    private String jwtTokenSecret = "JWTTokenMessage";
+
     public DataSourceFactory getDataSourceFactory() {
         return database;
     }
@@ -34,5 +39,15 @@ public class MobileServerConfiguration extends Configuration {
 
     public ServerContextConfig getServerContextConfig() {
         return serverContextConfig;
+    }
+
+    public byte[] getJwtTokenSecret() {
+        byte[] tokenSecret;
+        try {
+            tokenSecret =  jwtTokenSecret.getBytes("UTF-8");
+        }catch(UnsupportedEncodingException e) {
+            tokenSecret = null;
+        };
+        return tokenSecret;
     }
 }

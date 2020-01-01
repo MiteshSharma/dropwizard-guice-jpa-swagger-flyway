@@ -4,11 +4,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.security.Principal;
 
 @Entity
 @Table(name = "users")
 @ApiModel(value="user", description = "Contains user's properties")
-public class User extends BaseModel {
+public class User extends BaseModel implements Principal {
 
     @ApiModelProperty(example = "1")
     @Id
