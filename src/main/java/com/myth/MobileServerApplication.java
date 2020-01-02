@@ -18,6 +18,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -25,8 +26,11 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.HmacKey;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.EnumSet;
 
 public class MobileServerApplication extends Application<MobileServerConfiguration> {
 
@@ -52,7 +56,7 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
     @Override
     public void run(final MobileServerConfiguration configuration,
                     final Environment environment) {
-
+        this.enableCors(environment);
         environment.healthChecks().register("App Health Check", new ServerHealthCheck());
 
         FluentConfiguration flywayConfiguration = Flyway.configure();
@@ -72,6 +76,19 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
         this.setupAuth(configuration, environment, injector);
 
         environment.jersey().register(RequestIdFilter.class);
+    }
+
+    private void enableCors(final Environment environment) {
+        // Enabling CORS requests
+        final FilterRegistration.Dynamic filterRegistration = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+        filterRegistration.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS");
+        filterRegistration.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        filterRegistration.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
+
+        filterRegistration.setInitParameter("allowedHeaders", "Content-Type, Authorization, X-Requested-With, Content-Length, Accept, Origin");
+        filterRegistration.setInitParameter("allowCredentials", "true");
+
+        filterRegistration.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
     }
 
     private void setupAuth(final MobileServerConfiguration configuration,
