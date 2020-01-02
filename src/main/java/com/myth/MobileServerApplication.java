@@ -7,6 +7,7 @@ import com.myth.auth.UserAuthenticator;
 import com.myth.auth.UserAuthorizer;
 import com.myth.context.ServerContext;
 import com.myth.db.PersistInitialiser;
+import com.myth.filters.RequestIdFilter;
 import com.myth.health.ServerHealthCheck;
 import com.myth.models.User;
 import com.myth.resources.UserResource;
@@ -69,6 +70,8 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
         ServerContext.init(configuration.getServerContextConfig());
 
         this.setupAuth(configuration, environment, injector);
+
+        environment.jersey().register(RequestIdFilter.class);
     }
 
     private void setupAuth(final MobileServerConfiguration configuration,
