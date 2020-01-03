@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import com.myth.models.User;
 import com.myth.repository.IUserRepository;
+import redis.clients.jedis.Jedis;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Singleton
 @Transactional
 public class UserRepository extends BaseRepository<User> implements IUserRepository {
-    @Inject
+
     public UserRepository(Provider<EntityManager> entityManager) {
         super(entityManager);
     }

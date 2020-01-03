@@ -1,5 +1,7 @@
 package com.myth;
 
+import com.bendb.dropwizard.redis.JedisBundle;
+import com.bendb.dropwizard.redis.JedisFactory;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -49,6 +51,13 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(MobileServerConfiguration configuration) {
                 return configuration.getSwaggerBundleConfiguration();
+            }
+        });
+
+        bootstrap.addBundle(new JedisBundle<MobileServerConfiguration>() {
+            public JedisFactory getJedisFactory(
+                    MobileServerConfiguration configuration) {
+                return configuration.getRedis();
             }
         });
     }

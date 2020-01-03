@@ -1,5 +1,6 @@
 package com.myth;
 
+import com.bendb.dropwizard.redis.JedisFactory;
 import com.myth.context.ServerContextConfig;
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,6 +30,13 @@ public class MobileServerConfiguration extends Configuration {
     @JsonProperty("jwtTokenSecret")
     private String jwtTokenSecret = "JWTTokenMessage";
 
+    @NotNull
+    @JsonProperty("redis")
+    private JedisFactory redis;
+
+    @JsonProperty("environment")
+    private String environment;
+
     public DataSourceFactory getDataSourceFactory() {
         return database;
     }
@@ -39,6 +47,14 @@ public class MobileServerConfiguration extends Configuration {
 
     public ServerContextConfig getServerContextConfig() {
         return serverContextConfig;
+    }
+
+    public JedisFactory getRedis() {
+        return redis;
+    }
+
+    public String getEnvironment() {
+        return environment;
     }
 
     public byte[] getJwtTokenSecret() {
