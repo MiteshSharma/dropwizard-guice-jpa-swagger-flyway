@@ -15,6 +15,7 @@ import java.util.Optional;
 @Transactional
 public class UserRepository extends BaseRepository<User> implements IUserRepository {
 
+    @Inject
     public UserRepository(Provider<EntityManager> entityManager) {
         super(entityManager);
     }

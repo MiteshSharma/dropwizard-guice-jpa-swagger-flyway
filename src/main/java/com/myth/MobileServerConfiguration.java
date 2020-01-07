@@ -30,7 +30,6 @@ public class MobileServerConfiguration extends Configuration {
     @JsonProperty("jwtTokenSecret")
     private String jwtTokenSecret = "JWTTokenMessage";
 
-    @NotNull
     @JsonProperty("redis")
     private JedisFactory redis;
 

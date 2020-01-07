@@ -33,3 +33,14 @@ serverContextConfig:
   mysqlReadWriteThreadCount: 55
 
 jwtTokenSecret: token
+
+redis:
+  endpoint: 0.0.0.0:6379
+  password: null
+  minIdle: 0
+  maxIdle: 0
+  maxTotal: 1924
+  ssl: false
+  timeout: 2000
+
+environment: qa

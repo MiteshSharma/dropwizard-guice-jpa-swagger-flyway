@@ -7,7 +7,7 @@ import com.myth.repository.impl.UserRepository;
 
 import java.util.Optional;
 
-@ImplementedBy(UserCacheRepository.class)
+@ImplementedBy(UserRepository.class)
 public interface IUserRepository {
     Optional<User> getUser(long userId);
     User createUser(User user);
