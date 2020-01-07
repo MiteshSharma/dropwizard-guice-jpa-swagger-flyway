@@ -1,0 +1,65 @@
+version: 0.2
+
+#env:
+  #variables:
+     # key: "value"
+     # key: "value"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  #secrets-manager:
+     # key: secret-id:json-key:version-stage:version-id
+     # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      java: corretto8
+    #runtime-versions:
+      # name: version
+      # name: version
+    commands:
+      - docker run --name mysql -p 3306:3306 -e MYSQL_USER=root -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=mobile_servers --health-cmd='mysqladmin ping --silent' -d mysql
+      - docker run --name redis -p 6379:6379 --health-cmd='redis-cli ping' -d redis
+      - ./scripts/dockerStatusCheck.sh mysql
+      - ./scripts/dockerStatusCheck.sh redis
+  pre_build:
+    commands:
+      - echo started integration testing on `date`
+      - mvn clean verify -DskipIntegrationTests=false
+      - echo completed integration testing on `date`
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn clean install -DskipTests
+      - echo Build completed on `date`
+  post_build:
+    commands:
+      - echo Post cleanup started on `date`
+      - docker stop mysql
+      - docker stop redis
+      - echo Post cleanup completed on `date`
+#reports:
+  #report-name-or-arn:
+    #files:
+      # - location
+      # - location
+    #base-directory: location
+    #discard-paths: yes
+    #file-format: JunitXml | CucumberJson
+#artifacts:
+  #files:
+    # - location
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+  #paths:
+    # - paths

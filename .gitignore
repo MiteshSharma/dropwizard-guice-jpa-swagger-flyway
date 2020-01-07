@@ -12,5 +12,5 @@ release.properties
 *.iws
 
 logs
-
+*.log
 .DS_Store
