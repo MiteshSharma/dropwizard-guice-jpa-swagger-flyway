@@ -1,3 +1,9 @@
+server:
+  adminConnectors: []
+  applicationConnectors:
+    - type: http
+      port: ${PORT:-8080}
+
 logging:
   level: INFO
   loggers:
