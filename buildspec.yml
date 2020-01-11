@@ -61,5 +61,5 @@ phases:
       - docker stop mysql
       - docker stop redis
       - echo Post cleanup completed on `date`
-  artifacts:
-    files: imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
