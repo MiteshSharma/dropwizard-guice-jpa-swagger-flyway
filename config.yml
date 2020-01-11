@@ -22,9 +22,9 @@ database:
   # the name of your JDBC driver
   driverClass: com.mysql.jdbc.Driver
   # the username
-  user: root
+  user: ${MYSQL_USERNAME:-root}
   # the password
-  password: root
+  password: ${MYSQL_PASSWORD:-root}
   # the JDBC URL
   url: jdbc:mysql://${MYSQL_ENDPOINT:-127.0.0.1}/mobile_servers
   # any properties specific to your JDBC driver:
