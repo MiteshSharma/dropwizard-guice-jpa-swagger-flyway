@@ -26,7 +26,7 @@ database:
   # the password
   password: root
   # the JDBC URL
-  url: jdbc:mysql://127.0.0.1/mobile_servers
+  url: jdbc:mysql://${MYSQL_ENDPOINT:-127.0.0.1}/mobile_servers
   # any properties specific to your JDBC driver:
   properties:
     charSet: UTF-8
@@ -50,7 +50,7 @@ serverContextConfig:
 jwtTokenSecret: secrettoken
 
 redis:
-  endpoint: localhost:6379
+  endpoint: ${REDIS_ENDPOINT:-localhost:6379}
   password: null
   minIdle: 0
   maxIdle: 0
