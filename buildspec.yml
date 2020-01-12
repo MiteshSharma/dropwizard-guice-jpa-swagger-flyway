@@ -61,11 +61,11 @@ phases:
       - docker stop mysql
       - docker stop redis
       - echo Post cleanup completed on `date`
-      - Preparing for deploy phase
+      - echo Preparing for deploy phase
       - echo $ECS_TASK_EXECUTION_ROLE
       - echo cat taskdef.json
       - sed -i -e 's/ECS_TASK_EXECUTION_ROLE/$ECS_TASK_EXECUTION_ROLE/g' taskdef.json
-      - All files changed for deploy phase
+      - echo All files changed for deploy phase
 artifacts:
   files:
     - imageDetail.json
