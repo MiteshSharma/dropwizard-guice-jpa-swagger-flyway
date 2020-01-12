@@ -1,5 +1,5 @@
 {
-  "executionRoleArn": "arn:aws:iam::791579073412:role/ecsTaskExecutionRole",
+  "executionRoleArn": "ECS_TASK_EXECUTION_ROLE",
   "containerDefinitions": [
     {
       "name": "mobile-server-app",
