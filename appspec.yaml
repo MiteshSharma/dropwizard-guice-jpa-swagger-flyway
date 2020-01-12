@@ -7,9 +7,3 @@ Resources:
         LoadBalancerInfo:
           ContainerName: "mobile-server-app"
           ContainerPort: "8080"
-        PlatformVersion: "LATEST"
-        NetworkConfiguration:
-          AwsvpcConfiguration:
-            Subnets: ["subnet-02b256de8ae4b2c41","subnet-0ad2c39b4c943e5bc"]
-            SecurityGroups: ["sg-016fed64af4394ff0"]
-            AssignPublicIp: "ENABLED"
