@@ -3,6 +3,7 @@
     {
       "name": "mobile-server-app",
       "image": "<IMAGE1_NAME>",
+      "networkMode": "awsvpc",
       "cpu": 256,
       "portMappings": [
         {
