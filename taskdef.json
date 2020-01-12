@@ -3,7 +3,6 @@
     {
       "name": "mobile-server-app",
       "image": "<IMAGE1_NAME>",
-      "networkMode": "awsvpc",
       "cpu": 256,
       "portMappings": [
         {
@@ -18,6 +17,7 @@
   "requiresCompatibilities": [
     "FARGATE"
   ],
+  "networkMode": "awsvpc",
   "cpu": "256",
   "memory": "512",
   "family": "mobile-server-task"
