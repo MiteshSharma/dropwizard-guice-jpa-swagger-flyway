@@ -62,7 +62,9 @@ phases:
       - docker stop redis
       - echo Post cleanup completed on `date`
       - Preparing for deploy phase
-      - sed -i 's/ECS_TASK_EXECUTION_ROLE/$ECS_TASK_EXECUTION_ROLE/g' taskdef.json
+      - echo $ECS_TASK_EXECUTION_ROLE
+      - echo cat taskdef.json
+      - sed -i -e 's/ECS_TASK_EXECUTION_ROLE/$ECS_TASK_EXECUTION_ROLE/g' taskdef.json
       - All files changed for deploy phase
 artifacts:
   files:
