@@ -9,12 +9,7 @@ logging:
   loggers:
     com.myth: DEBUG
   appenders:
-  - type: file
-    currentLogFilename: "./mobile-server.log"
-    threshold: ALL
-    archive: true
-    archivedLogFilenamePattern: "./target/logs/mobile-server-%d.log.gz"
-    archivedFileCount: 5
+  - type: console
     timeZone: UTC
     logFormat: "%date{YYYY-MM-dd HH:mm:ss} %logger{15} %thread %C %M %X{applicationId:--} %X{requestId:--} uid:%X{userId:--} %msg%n %xException"
 

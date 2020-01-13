@@ -14,8 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/")
-@Api(value="/")
+@Path("")
+@Api(value="")
 @Produces(MediaType.APPLICATION_JSON)
 public class IndexResource {
     @Inject
@@ -23,7 +23,6 @@ public class IndexResource {
     }
 
     @GET
-    @Path("/")
     @Timed
     @ApiOperation(
             value = "Get status of server",

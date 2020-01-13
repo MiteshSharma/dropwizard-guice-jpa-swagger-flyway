@@ -12,6 +12,7 @@ import com.myth.db.PersistInitialiser;
 import com.myth.filters.RequestIdFilter;
 import com.myth.health.ServerHealthCheck;
 import com.myth.models.User;
+import com.myth.resources.IndexResource;
 import com.myth.resources.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -136,5 +137,6 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
 
     private void initResources(final Environment environment, final Injector injector) {
         environment.jersey().register(injector.getInstance(UserResource.class));
+        environment.jersey().register(injector.getInstance(IndexResource.class));
     }
 }
