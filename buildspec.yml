@@ -63,7 +63,7 @@ phases:
       - echo Preparing for deploy phase
       - echo $TASK_DEFINATION
       - sed -i -e "s|ECS_TASK_EXECUTION_ROLE|$ECS_TASK_EXECUTION_ROLE|" taskdef.json
-      - cat $TASK_DEFINATION > taskdef.json
+      - echo $TASK_DEFINATION > taskdef.json
       - echo All files changed for deploy phase
 artifacts:
   files:
