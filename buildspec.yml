@@ -63,7 +63,6 @@ phases:
       - echo Post cleanup completed on `date`
       - echo Preparing for deploy phase
       - echo $ECS_TASK_EXECUTION_ROLE
-      - echo cat taskdef.json
       - sed -i -e "s|ECS_TASK_EXECUTION_ROLE|$ECS_TASK_EXECUTION_ROLE|" taskdef.json
       - echo All files changed for deploy phase
 artifacts:
