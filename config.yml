@@ -17,10 +17,6 @@ logging:
     archivedFileCount: 5
     timeZone: UTC
     logFormat: "%date{YYYY-MM-dd HH:mm:ss} %logger{15} %thread %C %M %X{applicationId:--} %X{requestId:--} uid:%X{userId:--} %msg%n %xException"
-  - type: console
-      threshold: ALL
-      timeZone: UTC
-      target: stdout
 
 database:
   # the name of your JDBC driver
