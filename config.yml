@@ -9,9 +9,18 @@ logging:
   loggers:
     com.myth: DEBUG
   appenders:
-  - type: console
+  - type: file
+    currentLogFilename: "./mobile-server.log"
+    threshold: ALL
+    archive: true
+    archivedLogFilenamePattern: "./target/logs/mobile-server-%d.log.gz"
+    archivedFileCount: 5
     timeZone: UTC
     logFormat: "%date{YYYY-MM-dd HH:mm:ss} %logger{15} %thread %C %M %X{applicationId:--} %X{requestId:--} uid:%X{userId:--} %msg%n %xException"
+  - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
 
 database:
   # the name of your JDBC driver
