@@ -29,5 +29,23 @@
   },
   "cpu": "512",
   "memory": "1024",
-  "family": "mobile-server-ecs-task-prod"
+  "family": "mobile-server-ecs-task-prod",
+  "environment": [
+    {
+      "name": "MYSQL_ENDPOINT",
+      "value": "mysql_url"
+    },
+    {
+      "name": "MYSQL_USERNAME",
+      "value": "mysql_uname"
+    },
+    {
+      "name": "MYSQL_PASSWORD",
+      "value": "mysql_pwd"
+    },
+    {
+      "name": "REDIS_ENDPOINT",
+      "value": "redis_url"
+    }
+  ]
 }

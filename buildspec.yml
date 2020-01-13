@@ -61,7 +61,12 @@ phases:
       - docker stop redis
       - echo Post cleanup completed on `date`
       - echo Preparing for deploy phase
-      - echo $TASK_DEFINATION > taskdef.json
+      - echo $ECS_TASK_EXECUTION_ROLE
+      - sed -i -e "s|ECS_TASK_EXECUTION_ROLE|$ECS_TASK_EXECUTION_ROLE|" taskdef.json
+      - sed -i -e "s|mysql_url|$MYSQL_ENDPOINT|" taskdef.json
+      - sed -i -e "s|mysql_uname|$MYSQL_USERNAME|" taskdef.json
+      - sed -i -e "s|mysql_pwd|$MYSQL_PASSWORD|" taskdef.json
+      - sed -i -e "s|redis_url|$REDIS_ENDPOINT|" taskdef.json
       - echo All files changed for deploy phase
 artifacts:
   files:
