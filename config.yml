@@ -26,7 +26,7 @@ database:
   # the password
   password: ${MYSQL_PASSWORD:-root}
   # the JDBC URL
-  url: jdbc:mysql://${MYSQL_ENDPOINT:-127.0.0.1}/mobile_servers
+  url: jdbc:mysql://${MYSQL_ENDPOINT:-127.0.0.1}/mobile_server_prod
   # any properties specific to your JDBC driver:
   properties:
     charSet: UTF-8
