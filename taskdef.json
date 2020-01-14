@@ -12,6 +12,14 @@
           "containerPort": 8080
         }
       ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/mobile-server-app",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
       "environment": [
         {
           "name": "MYSQL_ENDPOINT",
@@ -37,14 +45,6 @@
     "FARGATE"
   ],
   "networkMode": "awsvpc",
-  "logConfiguration": {
-    "logDriver": "awslogs",
-    "options": {
-      "awslogs-group": "/ecs/mobile-server-app",
-      "awslogs-region": "us-east-1",
-      "awslogs-stream-prefix": "ecs"
-    }
-  },
   "cpu": "512",
   "memory": "1024",
   "family": "mobile-server-ecs-task-prod"
