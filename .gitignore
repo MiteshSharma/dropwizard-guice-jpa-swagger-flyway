@@ -14,3 +14,7 @@ release.properties
 logs
 *.log
 .DS_Store
+
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform
