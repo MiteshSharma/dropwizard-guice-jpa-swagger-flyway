@@ -19,6 +19,8 @@ import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.jersey.DropwizardResourceConfig;
+import io.dropwizard.jersey.setup.JerseyContainerHolder;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
@@ -27,6 +29,7 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.HmacKey;
@@ -96,6 +99,12 @@ public class MobileServerApplication extends Application<MobileServerConfigurati
         this.setupAuth(configuration, environment, injector);
 
         environment.jersey().register(RequestIdFilter.class);
+
+        // Adding resources to admin API
+        DropwizardResourceConfig jerseyConfig = new DropwizardResourceConfig(environment.metrics());
+        JerseyContainerHolder jerseyContainerHolder = new JerseyContainerHolder(new ServletContainer(jerseyConfig));
+        jerseyConfig.register(injector.getInstance(IndexResource.class));
+        environment.admin().addServlet("admin resources", jerseyContainerHolder.getContainer()).addMapping("/admin/*");
     }
 
     private void enableCors(final Environment environment) {
