@@ -1,5 +1,6 @@
 package com.myth.context.mdc;
 
+import com.myth.context.RequestContext;
 import org.slf4j.MDC;
 
 import java.util.Collection;
@@ -7,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-public class MDCThreadPoolExecutor implements ExecutorService {
+public class RequestThreadPoolExecutor implements ExecutorService {
 
     private ExecutorService executorService;
 
-    public MDCThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime,
-                                 TimeUnit unit, BlockingQueue<Runnable> workQueue) {
+    public RequestThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime,
+                                     TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         this.executorService = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
     }
 
@@ -83,7 +84,9 @@ public class MDCThreadPoolExecutor implements ExecutorService {
 
     public Runnable wrap(final Runnable runnable) {
         final Map<String, String> mdcContextMap = MDC.getCopyOfContextMap();
+        Map<String, Object> args = RequestContext.current().getArgs();
         return () -> {
+            RequestContext.current().setArgs(args);
             Map<String, String> previousMdcContextMap = MDC.getCopyOfContextMap();
             if (mdcContextMap == null) {
                 MDC.clear();

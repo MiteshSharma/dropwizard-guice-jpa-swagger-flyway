@@ -1,5 +1,6 @@
 package com.myth.filters;
 
+import com.myth.context.RequestContext;
 import io.dropwizard.util.Strings;
 import org.slf4j.MDC;
 
@@ -28,6 +29,7 @@ public class RequestIdFilter implements ContainerRequestFilter, ContainerRespons
         }
         containerRequestContext.getHeaders().putSingle(REQUEST_ID, requestId);
         MDC.put("requestId", requestId);
+        RequestContext.current().setArg("requestId", requestId);
     }
 
     @Override
